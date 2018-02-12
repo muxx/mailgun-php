@@ -29,6 +29,7 @@ class RestClient{
 		$this->mgClient->setDefaultOption('curl.options', array('CURLOPT_FORBID_REUSE' => true));
 		$this->mgClient->setDefaultOption('auth', array (API_USER, $this->apiKey));
 		$this->mgClient->setDefaultOption('exceptions', false);
+        $this->mgClient->setDefaultOption('verify', false);
 		$this->mgClient->setUserAgent(SDK_USER_AGENT . '/' . SDK_VERSION);
 	}
 
