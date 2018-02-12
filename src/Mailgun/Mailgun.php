@@ -41,9 +41,14 @@ class Mailgun{
             $fileHandle = fopen($tempFile, "w");
             fwrite($fileHandle, $postFiles);
 
-            $result = $this->post("$workingDomain/messages.mime", $postData, array("message" => $tempFile));
-            fclose($fileHandle);
-            unlink($tempFile);
+            try {
+                $result = $this->post("$workingDomain/messages.mime", $postData, ["message" => $tempFile]);
+            } catch (\Throwable $e) {
+                throw new \RuntimeException($e->getMessage());
+            } finally {
+                fclose($fileHandle);
+                unlink($tempFile);
+            }
             return $result;
         }
         else{
